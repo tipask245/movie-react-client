@@ -1,0 +1,51 @@
+.movie_item_container {
+  padding: 20px;
+  width: 950px;
+  margin: 30px auto;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.movie_item{
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie_title_wrap {
+  display: flex;
+}
+
+.movie_item_type {
+  height: 23px;
+  margin-top: 14px;
+  margin-left: 20px;
+  color: #D8D8D8;
+}
+
+.movie_inf_wrapper {
+  width: 560px;
+}
+
+.movie_img {
+  width: 300px;
+  border-radius: 5px;
+}
+
+.movie_item_desc {
+  margin: 30px 0;
+}
+
+.movie_item_rating span{
+  color: brown;
+}
+
+.auth_to_review, .review_nf  {
+  color: #C0C0C0;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.movie_review > h2 {
+  margin-bottom: 20px;
+}
+

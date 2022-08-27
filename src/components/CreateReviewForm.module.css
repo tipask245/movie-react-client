@@ -1,0 +1,35 @@
+.movie_review_form {
+  display: grid;
+  margin: 50px auto;
+  padding: 25px;
+    background-color: #ECECEC;
+    border-radius: 5px;
+  width: 400px;
+}
+
+.movie_review_title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movie_review_form > input, .movie_review_form > textarea {
+  border: 1px solid #C0C0C0;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.movie_review_form > textarea {
+  border-radius: inherit;
+  padding: 5px;
+  height: 200px;
+}
+
+.movie_review_form > button {
+  width: 150px;
+  background-color: white;
+  cursor: pointer;
+  margin: 0 auto;
+  height: 30px;
+  border-radius: inherit;
+  border: 1px solid black;
+}

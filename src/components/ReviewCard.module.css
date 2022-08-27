@@ -1,0 +1,31 @@
+.review_card {
+  width: 500px;
+  /* background-color: #ECECEC; */
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+ .review_title, .review_body {
+  background-color: white;
+  padding: 4px;
+  border-radius: inherit;
+}
+
+.review_username {
+  color: #A4A4A4;
+}
+
+/* .review_title {
+  background-color: white;
+  padding: 4px;
+}
+
+.review_body {
+  background-color: white;
+  padding: 4px;
+} */
+.review_username, .review_title {
+  margin-bottom: 5px;
+}
