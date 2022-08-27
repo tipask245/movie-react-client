@@ -10,7 +10,7 @@ import Pagination from '../components/pagination/Pagination'
 import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
 import { AuthContext } from '../context'
-import MovieFilter from '../components/filters/MovieFilter'
+// import MovieFilter from '../components/filters/MovieFilter'
 
 const Movies = () => {
 
@@ -24,17 +24,17 @@ const Movies = () => {
   const [isMovieLoading, setIsMovieLoading] = useState(true)
   const [filter, setFilter] = useState({sort: '', search: ''})
 
-  const sortedMovies = useMemo(() => {
-    console.log('getSortedPosts')
-    if (filter.sort) {
-      return filter.sort === 'id' ? [...movie].sort((a,b) => a[filter.sort] - b[filter.sort]) :[...movie].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-    }
-    return movie
-  }, [filter.sort, movie])
+  // const sortedMovies = useMemo(() => {
+  //   console.log('getSortedPosts')
+  //   if (filter.sort) {
+  //     return filter.sort === 'id' ? [...movie].sort((a,b) => a[filter.sort] - b[filter.sort]) :[...movie].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
+  //   }
+  //   return movie
+  // }, [filter.sort, movie])
 
-  const sortedAndSeached = useMemo(() => {
-    return sortedMovies.filter(el => el.title.toLowerCase().includes(filter.search))
-  }, [filter.search, sortedMovies])
+  // const sortedAndSeached = useMemo(() => {
+  //   return sortedMovies.filter(el => el.title.toLowerCase().includes(filter.search))
+  // }, [filter.search, sortedMovies])
 
 
   useEffect(() => {
@@ -87,14 +87,14 @@ const Movies = () => {
         </Modal>
       </div>
       }
-      <MovieFilter
+      {/* <MovieFilter
         filter={filter}
         setFilter={setFilter}
-      />
+      /> */}
       {
         isMovieLoading
         ? <Loader/>
-        : <MovieList movie={sortedAndSeached}/>
+        : <MovieList movie={movie}/>
       }
       <Pagination totalPages={totalPages} page={page} changePage={changePage}/>
     </div>
