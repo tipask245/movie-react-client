@@ -14,7 +14,7 @@
 
 .movie_review_form > input, .movie_review_form > textarea {
   border: 1px solid #C0C0C0;
-  max-width: 400px;
+  max-width: 350px;
   margin-bottom: 20px;
 }
 

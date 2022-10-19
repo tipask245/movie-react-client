@@ -1,0 +1,48 @@
+.account_review {
+  // padding: 10px;
+  // border-radius: 5px;
+  // background-color: #ECECEC;
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 35px;
+
+  .account_film {
+    padding: 10px;
+    display: flex;
+    height: 90px;
+    cursor: pointer;
+  }
+
+  .film_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  
+  .review_info {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ECECEC;
+  }
+
+  .account_film__title {
+    height: fit-content;
+    margin: auto 5px;
+  }
+  
+  
+  .review_info__title {
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+
+  
+
+}
+
+.account__body__not_found {
+  color: #C0C0C0;
+  text-align: center;
+  margin: 40px 0;
+}

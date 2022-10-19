@@ -26,7 +26,7 @@ const Registration = () => {
     <div className='registration'>
       <h1>Регистрация</h1>
       <form className="registration_form">
-      <p>{ !notFound.isFound ? notFound.error : ''}</p>
+      { !notFound.isFound ? <p>{notFound.error}</p> : ''}
       {
         isSuccess &&
         <p className='success'>Пользователь успешно зарегистрирован</p>
@@ -45,7 +45,7 @@ const Registration = () => {
             setRegistration({...registration, password: e.target.value})
           }}
         />
-        <button className="form_button" disabled={isFilled()} onClick={registrationReq}>Войти</button>
+        <button className="form_button" disabled={isFilled()} onClick={registrationReq}>Зарегистрироваться</button>
       </form>
     </div>
   )

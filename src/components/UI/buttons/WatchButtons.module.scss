@@ -1,0 +1,16 @@
+.will_watch_button, .watched_button {
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #ECECEC;
+  display: block;
+}
+
+.button_wrap {
+  display: flex;
+  margin-top: 15px;
+  p {
+    line-height: 2.5em;
+    margin-left: 5px;
+  }
+}

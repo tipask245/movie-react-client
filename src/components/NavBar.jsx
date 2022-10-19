@@ -1,8 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
+// import axios from "axios";
 import { Link } from 'react-router-dom'
 import './NavBar.css'
 import { AuthContext } from "../context";
+import { useNavigate } from 'react-router-dom'
+import { transliterate as tr } from 'transliteration'
 
 const NavBar = () => {
 
@@ -19,15 +21,17 @@ const NavBar = () => {
   //       let res = axios.post('http://localhost:5000/auth/checkAuth', {}, config).catch(() => setIsAuth(false))
   //   }
   // }, [])
-
+  const router = useNavigate()
   const logOut = () => {
     localStorage.removeItem('token')
     setRole('')
     localStorage.removeItem('name')
+    localStorage.removeItem('id')
     setIsAuth(false)
   }
 
-  let name = localStorage.getItem('name')
+  const name = localStorage.getItem('name')
+  
   
   return (
     <nav className='nav-bar'>
@@ -39,7 +43,7 @@ const NavBar = () => {
           {
             isAuth
             ? (<div className='user'>
-                <h3 className='user_name'>{name}</h3>
+                <h3 className='user_name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
                 <a className='user_logout' onClick={() => logOut()}>Выйти</a>
               </div>)
             : (<ul>

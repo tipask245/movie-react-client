@@ -1,35 +1,68 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import './MovieItemPage.css'
-import CreateReviewForm from '../components/CreateReviewForm'
+import './MovieItemPage.scss'
+import CreateReviewForm from '../components/Forms/CreateReviewForm'
 import { AuthContext } from '../context'
-import ReviewCard from '../components/ReviewCard'
+import ReviewCard from '../components/Cards/ReviewCard'
+import WillWatchButton from '../components/UI/buttons/WillWatchButton'
+import WatchedButton from '../components/UI/buttons/WatchedButton'
 
 const MovieItemPage = () => {
 
-  const {isAuth} = useContext(AuthContext)
+  const {isAuth, userInf, setUserInf} = useContext(AuthContext)
   const params = useParams()
   const [movie, setMovie] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
-  useEffect(() => {
-    fetchMovieById()
-  },[])
+  const router = useNavigate()
 
   const fetchMovieById = async () => {
-    let res = await axios.get(`http://localhost:5000/movie/get_byid/${params.title.split('_')[1]}`)
+    await axios.get(`http://localhost:5000/movie/get_byid/${params.title.split('_')[1]}/${isAuth}`)
       .then((result) => {
-        setIsLoaded(true)
+        if (result.data === '') {
+          router('/404')
+        }
         setMovie(result.data[0])
+        setIsLoaded(true)
       })
+      // .catch(e => {
+      //   console.log(e);
+      //   router('/404')
+      // })
+      // if (res === undefined) {
+      //   router('/404')
+      // }
   }
+
+  useEffect(() => {
+    fetchMovieById()
+  }, [])
 
   const createReview = async (data) => {
     await axios.post('http://localhost:5000/movie/create_review', data)
   }
 
-  console.log(isLoaded)
-  console.log(movie.review, movie.title );
+  const addWatchList = async (adress) => {
+    const data = {
+      id: params.title.split('_')[1],
+      name: localStorage.getItem('name'),
+      rating: movie.rating
+    }
+    await axios.post(`http://localhost:5000/movie/${adress}`, data)
+  }
+
+  // const buttonStyle = (type) => {
+  //   userInf.userInf[type].forEach((el) => {
+  //     // console.log(el)
+  //     if (movie._id === el.filmId) {
+  //       return {fill: 'brown'}
+  //       console.log(123);
+  //     } 
+  //   })
+  // }
+
+  // console.log(isLoaded)
+  // console.log(movie.review, movie.title );
   return (
     <div className='movie_item_container'>
       <div className="movie_item">
@@ -41,12 +74,20 @@ const MovieItemPage = () => {
           </div>
           <p className="movie_item_desc">{movie.desc}</p>
           <h4 className="movie_item_rating">Оценка: <span>{movie.rating}</span></h4>
+          {
+            isAuth
+              ? <>
+                  <WillWatchButton onClick={() => addWatchList('set_will_watch')}/> 
+                  <WatchedButton onClick={() => addWatchList('set_watched')}/>
+                </>
+              : <h4 className='need_to_auth'>Для оценки фильма вам нужно авторизоваться</h4>
+          }
         </div>
       </div>
       {
         isAuth
-        ? <CreateReviewForm createReview={createReview}/>
-        : <h4 className='auth_to_review'>Для написания рецензии вам нужно авторизоваться</h4>
+        ? <CreateReviewForm createReview={createReview} movieImg={movie.img}/>
+        : <h4 className='need_to_auth'>Для написания рецензии вам нужно авторизоваться</h4>
       }
       
       <div className="movie_review">
@@ -56,6 +97,7 @@ const MovieItemPage = () => {
             movie.review.length !== 0
             ? movie.review.map((el, ind) => (
               <ReviewCard 
+                key={el._id}
                 username={el.name}
                 title={el.reviewTitle}
                 body={el.reviewBody}

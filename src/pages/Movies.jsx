@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import MovieCard from '../components/MovieCard'
 import './Movies.css'
 import Modal from '../components/UI/Modals/Modal'
-import CreateMovieForm from '../components/CreateMovieForm'
-import { useNavigate } from 'react-router-dom'
+import CreateMovieForm from '../components/Forms/CreateMovieForm'
+// import { useNavigate } from 'react-router-dom'
 import { getPagesArray, getTotalPages } from '../utils/pages'
 import Pagination from '../components/pagination/Pagination'
 import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
+// import FilterSideBar from '../components/FilterSideBar'
 import { AuthContext } from '../context'
 // import MovieFilter from '../components/filters/MovieFilter'
 
@@ -22,7 +22,7 @@ const Movies = () => {
   const [page, setPage] = useState(1)
   const [modal, setModal] = useState(false)
   const [isMovieLoading, setIsMovieLoading] = useState(true)
-  const [filter, setFilter] = useState({sort: '', search: ''})
+  // const [filter, setFilter] = useState({sort: '', search: ''})
 
   // const sortedMovies = useMemo(() => {
   //   console.log('getSortedPosts')
@@ -40,7 +40,7 @@ const Movies = () => {
   useEffect(() => {
     fetchMovies(limit, page)
     setIsCreate(false)
-  }, [isCreate])
+  }, [isCreate, limit, page])
 
   const fetchMovies = async (limit, page) => {
     // setIsMovieLoading(true)
@@ -91,11 +91,19 @@ const Movies = () => {
         filter={filter}
         setFilter={setFilter}
       /> */}
-      {
+      <div className="wrapper">
+        {/* <FilterSideBar/> */}
+        {
+          isMovieLoading
+          ? <Loader/>
+          : <MovieList movie={movie}/>
+        }
+      </div>
+      {/* {
         isMovieLoading
         ? <Loader/>
         : <MovieList movie={movie}/>
-      }
+      } */}
       <Pagination totalPages={totalPages} page={page} changePage={changePage}/>
     </div>
   )

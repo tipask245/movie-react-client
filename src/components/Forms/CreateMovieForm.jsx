@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classes from './CreateMovieForm.module.css'
-import Input from './UI/inputs/Input'
+import Input from '../UI/inputs/Input'
 
 const CreateMovieForm = ({setIsCreate, createMovie}) => {
 

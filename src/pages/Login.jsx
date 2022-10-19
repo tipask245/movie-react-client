@@ -7,10 +7,10 @@ import Input from '../components/UI/inputs/Input'
 
 const Login = () => {
 
-  const {setRole} = useContext(AuthContext)
+  const {setRole, setIsAuth} = useContext(AuthContext)
   const [login, setLogin] = useState({username: '', password: ''})
   const [notFound, setNotFound] = useState({error: '', isFound: true})
-  const {isAuth, setIsAuth} = useContext(AuthContext)
+  // const {setIsAuth} = useContext(AuthContext)
   
   const loginReq = async (e) => {
     e.preventDefault()
@@ -18,7 +18,7 @@ const Login = () => {
       username: login.username,
       password : login.password
     }).catch((e) => {
-      console.log(e.response.data)
+      // console.log(e.response.data)
       setNotFound({error: e.response.data, isFound: false})
     })
     if (res && res.status === 200) {
@@ -27,6 +27,7 @@ const Login = () => {
       localStorage.setItem('token', res.data.token)
       setRole(res.data.role[0])
       localStorage.setItem('name', res.data.username)
+      localStorage.setItem('id', res.data.id)
       setIsAuth(true)
       
 
@@ -41,7 +42,7 @@ const Login = () => {
   return (
     <div className='login'>
       <h1>Авторизация</h1>
-      { !notFound.isFound ? notFound.error : ''}
+      {!notFound.isFound ? <p>{notFound.error}</p>: ''}
       <form className="login_form">
         <Input 
           type="text" 
