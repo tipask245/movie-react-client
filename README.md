@@ -25,5 +25,3 @@ You may also see any lint errors in the console.
 ![image](https://user-images.githubusercontent.com/60050123/187044387-ab4d608e-ada6-4d4e-b130-94687ca3c86e.png)
 
 ![image](https://user-images.githubusercontent.com/60050123/187044377-4fff5e7d-475b-4ed0-b46e-b248814ff43b.png)
-
-
