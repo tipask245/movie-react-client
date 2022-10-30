@@ -10,9 +10,9 @@ const Registration = () => {
 
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const registrationReq = async (e) => {
+  const registrationReq = (e) => {
     e.preventDefault()
-    let res = await axios.post('http://localhost:5000/auth/registration', registration).then(() => setIsSuccess(true)).catch((e) => {
+    axios.post('http://localhost:5000/auth/registration', registration).then(() => setIsSuccess(true)).catch((e) => {
       console.log(e.response.data)
       setNotFound({error: e.response.data, isFound: false})
     })
@@ -35,14 +35,14 @@ const Registration = () => {
           type="text" 
           placeholder='Имя пользователя'
           onChange={e => {
-            setRegistration({...registration, username: e.target.value})
+            setRegistration({...registration, username: e.target.value.trim()})
           }}
         />
         <Input 
           type="text" 
           placeholder='Пароль'
           onChange={e => {
-            setRegistration({...registration, password: e.target.value})
+            setRegistration({...registration, password: e.target.value.trim()})
           }}
         />
         <button className="form_button" disabled={isFilled()} onClick={registrationReq}>Зарегистрироваться</button>

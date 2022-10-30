@@ -20,7 +20,7 @@ const AccountList = ({setCurrentList, currentList}) => {
         <button className={isCurrent('watched')} onClick={() => setCurrentList('watched')}>Просмотрено</button>
       </li>
       <li>
-        <button className={isCurrent('will_watch')} onClick={() => setCurrentList('will_watch')}>Буду смотреть</button>
+        <button className={isCurrent('willWatch')} onClick={() => setCurrentList('willWatch')}>Буду смотреть</button>
       </li>
     </ul>
   )

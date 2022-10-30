@@ -9,46 +9,84 @@ import WillWatchButton from '../components/UI/buttons/WillWatchButton'
 import WatchedButton from '../components/UI/buttons/WatchedButton'
 
 const MovieItemPage = () => {
-
-  const {isAuth, userInf, setUserInf} = useContext(AuthContext)
+  const {isAuth, userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
   const params = useParams()
   const [movie, setMovie] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
   const router = useNavigate()
+  const movieId = params.title.split('_')[1]
 
-  const fetchMovieById = async () => {
-    await axios.get(`http://localhost:5000/movie/get_byid/${params.title.split('_')[1]}/${isAuth}`)
-      .then((result) => {
-        if (result.data === '') {
-          router('/404')
-        }
-        setMovie(result.data[0])
-        setIsLoaded(true)
-      })
-      // .catch(e => {
-      //   console.log(e);
-      //   router('/404')
-      // })
-      // if (res === undefined) {
-      //   router('/404')
-      // }
+  const movieInList = (list, movieId) => {
+    if (list.length > 0) {
+      let filtered = list.filter((el) => el.filmId === movieId)
+      return filtered.length > 0
+    } else {
+      return false
+    }
   }
+
+  let isMovieInWatched, isMovieInWillWatched
+
+  if (isUserInfLoaded && (userInf.watched.length > 0 || userInf.willWatch.length > 0)) {
+    isMovieInWatched = movieInList(userInf.watched, movieId)
+    isMovieInWillWatched = movieInList(userInf.willWatch, movieId)
+    console.log(isMovieInWatched, isMovieInWillWatched);
+  }
+
+  // const fetchMovieById = (movieId, isAuth) => {
+  //   axios.get(`http://localhost:5000/movie/get_byid/${movieId}/${isAuth}`)
+  //     .then(result => {
+  //       if (result.data === '') {
+  //         router('/404')
+  //       }
+  //       setMovie(result.data[0])
+  //       setIsLoaded(true)
+  //     })
+  // }
 
   useEffect(() => {
-    fetchMovieById()
+    const fetchMovieById = (movieId, isAuth) => {
+      axios.get(`http://localhost:5000/movie/get_byid/${movieId}/${isAuth}`)
+        .then(result => {
+          if (result.data === '') {
+            router('/404')
+          }
+          setMovie(result.data[0])
+          setIsLoaded(true)
+        })
+    }
+    fetchMovieById(movieId, isAuth)
+    console.log("useEffect render")
   }, [])
 
-  const createReview = async (data) => {
-    await axios.post('http://localhost:5000/movie/create_review', data)
+  const createReview = data => {
+    axios.post('http://localhost:5000/movie/create_review', data)
+    .then(result => {
+      setMovie({...movie, reviews: result.data})
+    })
+    console.log("render")
   }
 
-  const addWatchList = async (adress) => {
+  const addInList = async (name) => {
     const data = {
       id: params.title.split('_')[1],
       name: localStorage.getItem('name'),
-      rating: movie.rating
+      rating: movie.rating,
+      listName: name
     }
-    await axios.post(`http://localhost:5000/movie/${adress}`, data)
+    const res = await axios.post(`http://localhost:5000/movie/add_in_list`, data)
+    setUserInf({...userInf, [name]: res.data})
+  }
+
+  const removeFromList = async (name) => {
+    const data = {
+      id: params.title.split('_')[1],
+      name: localStorage.getItem('name'),
+      rating: movie.rating,
+      listName: name
+    }
+    const res = await axios.post(`http://localhost:5000/movie/remove_from_list`, data)
+    setUserInf({...userInf, [name]: res.data})
   }
 
   // const buttonStyle = (type) => {
@@ -61,8 +99,6 @@ const MovieItemPage = () => {
   //   })
   // }
 
-  // console.log(isLoaded)
-  // console.log(movie.review, movie.title );
   return (
     <div className='movie_item_container'>
       <div className="movie_item">
@@ -75,10 +111,10 @@ const MovieItemPage = () => {
           <p className="movie_item_desc">{movie.desc}</p>
           <h4 className="movie_item_rating">Оценка: <span>{movie.rating}</span></h4>
           {
-            isAuth
+            isAuth && isUserInfLoaded
               ? <>
-                  <WillWatchButton onClick={() => addWatchList('set_will_watch')}/> 
-                  <WatchedButton onClick={() => addWatchList('set_watched')}/>
+                  <WillWatchButton onClick={() => isMovieInWillWatched ? removeFromList('willWatch') : addInList('willWatch')} isMovieInWillWatched={isMovieInWillWatched}/> 
+                  <WatchedButton onClick={() => isMovieInWatched ? removeFromList('watched') : addInList('watched')} isMovieInWatched={isMovieInWatched}/>
                 </>
               : <h4 className='need_to_auth'>Для оценки фильма вам нужно авторизоваться</h4>
           }
@@ -90,12 +126,12 @@ const MovieItemPage = () => {
         : <h4 className='need_to_auth'>Для написания рецензии вам нужно авторизоваться</h4>
       }
       
-      <div className="movie_review">
+      <div className="movie_reviews">
         <h2>Рецензии: </h2>
         {
           isLoaded &&
-            movie.review.length !== 0
-            ? movie.review.map((el, ind) => (
+            movie.reviews.length !== 0
+            ? movie.reviews.map((el, ind) => (
               <ReviewCard 
                 key={el._id}
                 username={el.name}
@@ -103,7 +139,7 @@ const MovieItemPage = () => {
                 body={el.reviewBody}
               />
             ))
-            : <h4 className='review_nf'>Рецензий пока нет</h4>
+            : <h4 className='reviews_nf'>Рецензий пока нет</h4>
         }
         
       </div>

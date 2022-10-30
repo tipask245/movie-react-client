@@ -1,0 +1,53 @@
+.account_film {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  height: 90px;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  .film_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    span {
+      color: brown;
+    }
+  }
+  .account_film__title {
+    height: fit-content;
+    margin: auto 5px;
+    max-width: 280px;
+  }
+
+  .account_film__delete {
+    min-width: 20px;
+    height: 20px;
+    position: relative;
+    align-self: center;
+    margin-left: auto;
+  }
+
+  .account_film__delete::before, .account_film__delete::after {
+    content: '';
+    min-width: 20px;
+    height: 5px;
+    position: absolute;
+    background-color: brown;
+    left: 0;
+    top: 8px;
+  }
+
+  .account_film__delete::before {
+    transform: rotate(45deg);
+  }
+
+  .account_film__delete::after {
+    transform: rotate(-45deg);
+  }
+}
+

@@ -9,43 +9,44 @@
 .movie_item{
   display: flex;
   justify-content: space-between;
+
+  img {
+    height: fit-content;
+    width: 300px;
+    border-radius: 5px;
+  }
+
+  .movie_item_type {
+    height: 23px;
+    margin-top: 14px;
+    margin-left: 20px;
+    color: #D8D8D8;
+  }
+  
+  .movie_inf_wrapper {
+    width: 560px;
+  }
+  
+  .movie_item_desc {
+    margin: 30px 0;
+  }
+  
+  .movie_item_rating span{
+    color: brown;
+  }
 }
 
 .movie_title_wrap {
   display: flex;
 }
 
-.movie_item_type {
-  height: 23px;
-  margin-top: 14px;
-  margin-left: 20px;
-  color: #D8D8D8;
-}
-
-.movie_inf_wrapper {
-  width: 560px;
-}
-
-.movie_img {
-  width: 300px;
-  border-radius: 5px;
-}
-
-.movie_item_desc {
-  margin: 30px 0;
-}
-
-.movie_item_rating span{
-  color: brown;
-}
-
-.need_to_auth, .review_nf  {
+.need_to_auth, .reviews_nf  {
   color: #C0C0C0;
   text-align: center;
   margin: 40px 0;
 }
 
-.movie_review > h2 {
+.movie_reviews > h2 {
   margin-bottom: 20px;
 }
 

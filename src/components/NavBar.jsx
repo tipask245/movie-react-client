@@ -8,7 +8,7 @@ import { transliterate as tr } from 'transliteration'
 
 const NavBar = () => {
 
-  const {isAuth, setIsAuth, role, setRole} = useContext(AuthContext)
+  const {isAuth, setIsAuth, role, setRole, setUserInf} = useContext(AuthContext)
   // useEffect(() => {
   //   if (localStorage.getItem('token') !== null) {
   //     console.log(localStorage.getItem('token'));
@@ -25,6 +25,7 @@ const NavBar = () => {
   const logOut = () => {
     localStorage.removeItem('token')
     setRole('')
+    setUserInf([])
     localStorage.removeItem('name')
     localStorage.removeItem('id')
     setIsAuth(false)

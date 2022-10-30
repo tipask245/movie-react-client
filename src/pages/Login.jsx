@@ -7,7 +7,7 @@ import Input from '../components/UI/inputs/Input'
 
 const Login = () => {
 
-  const {setRole, setIsAuth} = useContext(AuthContext)
+  const {setRole, setIsAuth, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
   const [login, setLogin] = useState({username: '', password: ''})
   const [notFound, setNotFound] = useState({error: '', isFound: true})
   // const {setIsAuth} = useContext(AuthContext)
@@ -26,11 +26,11 @@ const Login = () => {
       console.log(res.data)
       localStorage.setItem('token', res.data.token)
       setRole(res.data.role[0])
-      localStorage.setItem('name', res.data.username)
+      localStorage.setItem('name', res.data.userInf.username)
       localStorage.setItem('id', res.data.id)
       setIsAuth(true)
-      
-
+      setUserInf(res.data.userInf)
+      setIsUserInfLoaded(true)
     }
     
   }
@@ -48,14 +48,14 @@ const Login = () => {
           type="text" 
           placeholder='Имя пользователя'
           onChange={e => {
-            setLogin({...login, username: e.target.value})
+            setLogin({...login, username: e.target.value.trim()})
           }}
         />
         <Input 
           type="text" 
           placeholder='Пароль'
           onChange={e => {
-            setLogin({...login, password: e.target.value})
+            setLogin({...login, password: e.target.value.trim()})
           }}
         />
         <button className="form_button" disabled={isFilled()} onClick={loginReq}>Войти</button>

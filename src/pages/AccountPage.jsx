@@ -2,17 +2,17 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AccountInfo from '../components/AccountInfo'
 import AccountList from '../components/AccountList'
-import AccountReview from '../components/Cards/AccountReviewCard'
+import AccountReview from '../components/Cards/Account/AccountReviewCard'
 import './AccountPage.scss'
 import './AccountBody.scss'
 import AccountPageTitle from '../components/AccountPageTitle'
 import { AuthContext } from '../context'
+import AccountMovieCard from '../components/Cards/Account/AccountMovieCard'
 
 const AccountPage = () => {
 
-  const {userInf, setUserInf, userInfIsLoaded} = useContext(AuthContext)
+  const {userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
   const [currentList, setCurrentList] = useState('reviews')
-  // const [isLoaded, setIsLoaded] = useState(false)
   
   // const fetchUserInfo = async () => {
   //   const config = {
@@ -26,14 +26,27 @@ const AccountPage = () => {
   //   setIsLoaded(true)
   // }
 
-  // useEffect(() => {
-  //   fetchUserInfo()
-  // }, [])
-  console.log(userInfIsLoaded);
+  const deleteReview = (filmId, _id) => {
+    setUserInf({...userInf, reviews: userInf.reviews.filter(el => el._id !== _id)})
+    axios.post('http://localhost:5000/movie/delete_review', {
+      filmId,
+      _id, 
+      username: localStorage.getItem('name')
+    }).catch((e) => console.log(e))
+  }
+
+  const deleteMovieInList = (filmId, listName) => {
+    setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.filmId !== filmId)})
+    axios.post('http://localhost:5000/movie/remove_from_list', {
+      id: filmId,
+      listName,
+      name: localStorage.getItem('name')
+    }).catch((e) => console.log(e))
+  }
 
   return (
     
-    userInfIsLoaded &&
+    isUserInfLoaded &&
     <section className="AccountPage">
       <AccountInfo/>
       <hr />
@@ -42,18 +55,29 @@ const AccountPage = () => {
           <AccountPageTitle title={currentList} />
           {
             // isLoaded &&
-              userInf.userInf[currentList].length !== 0 
-                ? userInf.userInf[currentList].map(el => ( 
-                    // <div className="abc">
-                    //   <h4>{el.reviewTitle}</h4>
-                    // </div>
+              userInf[currentList].length !== 0 
+                ? userInf[currentList].map(el => (
+                  currentList === 'reviews'
+                  ? 
                     <AccountReview 
                       filmImg={el.filmImg}
                       filmTitle={el.filmTitle}
                       filmRating={el.filmRating} 
                       reviewTitle={el.reviewTitle} 
                       reviewBody={el.reviewBody}
-                      _id={el.filmId}  
+                      reviewId={el._id}
+                      filmId={el.filmId}  
+                      deleteReview={deleteReview}
+                      key={el._id} 
+                    />
+                  : <AccountMovieCard 
+                      filmImg={el.filmImg}
+                      filmTitle={el.filmTitle}
+                      filmRating={el.filmRating}
+                      filmId={el.filmId} 
+                      deleteMovie={true}
+                      deleteMovieInList={deleteMovieInList}
+                      listName={currentList}
                       key={el._id} 
                     />
                   ))

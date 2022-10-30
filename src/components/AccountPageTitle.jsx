@@ -3,7 +3,7 @@ import React from 'react'
 const AccountPageTitle = ({title}) => {
 
   const titleObj = {
-    will_watch: 'Буду смотреть',
+    willWatch: 'Буду смотреть',
     watched: 'Просмотрено',
     reviews: 'Рецензии',
     marks: 'Оценки'

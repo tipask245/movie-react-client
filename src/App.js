@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import './App.css';
@@ -16,18 +16,17 @@ function App() {
   const [isAuth, setIsAuth] = useState(false)
   const [role, setRole] = useState('')
   const [userInf, setUserInf] = useState([])
-  const [userInfIsLoaded, setUserInfIsLoaded] = useState(false)
+  const [isUserInfLoaded, setIsUserInfLoaded] = useState(false)
 
-  const fetchUserInfo = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    }
-    await axios.post('http://localhost:5000/auth/getUserInformation', {id: localStorage.getItem('id')}, config).then((res) => (setUserInf(res.data), setUserInfIsLoaded(true))).catch(() => {
-      console.log('error');
+  const fetchUserInfo = async (config) => {
+    await axios.post('http://localhost:5000/auth/getUserInformation', {id: localStorage.getItem('id')}, config)
+    .then(res => {
+      setUserInf(res.data.userInf)
+      setIsUserInfLoaded(true)
+    }).catch(() => {
+      // setIsUserInfLoaded(false)
+      console.log(123)
     })
-    
   }
   
   useEffect(() => {
@@ -38,12 +37,12 @@ function App() {
         }
       }
       setIsAuth(true)
-      axios.post('http://localhost:5000/auth/checkAuth', {}, config).then((res) => setRole(res.data.role[0])).catch(() => {
+      axios.post('http://localhost:5000/auth/checkAuth', {}, config).then(res => setRole(res.data.role[0])).catch(() => {
         setIsAuth(false)
         localStorage.removeItem('token')
       })
 
-      fetchUserInfo()
+      fetchUserInfo(config)
       
     }
   }, [])
@@ -56,7 +55,8 @@ function App() {
       setRole,
       userInf,
       setUserInf,
-      userInfIsLoaded
+      isUserInfLoaded,
+      setIsUserInfLoaded
     }}>
       <Router>
         <NavBar/>

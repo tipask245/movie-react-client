@@ -6,10 +6,7 @@ import classes from './CreateReviewForm.module.css'
 const CreateReviewForm = ({createReview, movieImg}) => {
 
   const params = useParams()
-  const [reviewInp, setReviewInp] = useState({
-    title: '',
-    review: ''
-  })
+  const [reviewInp, setReviewInp] = useState({title: '', review: ''})
 
   // let data = {
   //   id: params.title.split('_')[1],
@@ -32,8 +29,7 @@ const CreateReviewForm = ({createReview, movieImg}) => {
       }
     }
     createReview(data)
-    reviewInp.title('')
-    reviewInp.review('')
+    setReviewInp({title: '', review: ''})
     // setReviewInp({
     //   title: '',
     //   review: ''
@@ -49,8 +45,8 @@ const CreateReviewForm = ({createReview, movieImg}) => {
     <form className={classes.movie_review_form}>
       <h3 className={classes.movie_review_title}>Написать рецензию</h3>
       
-        <Input placeholder='Заголовок' onChange={(e) => setReviewInp({...reviewInp, title: e.target.value})}/>
-        <textarea placeholder='Рецензия' onChange={(e) => setReviewInp({...reviewInp, review: e.target.value})}/>
+        <Input placeholder='Заголовок' value={reviewInp.title} onChange={(e) => setReviewInp({...reviewInp, title: e.target.value})}/>
+        <textarea placeholder='Рецензия' value={reviewInp.review} onChange={(e) => setReviewInp({...reviewInp, review: e.target.value})}/>
       
       <button onClick={addReview} disabled={isFilled()}>Создать</button>
     </form>
