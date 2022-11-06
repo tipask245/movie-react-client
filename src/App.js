@@ -10,6 +10,7 @@ import MovieItemPage from "./pages/MovieItemPage";
 import axios from "axios";
 import { AuthContext } from "./context";
 import AccountPage from "./pages/AccountPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
 
@@ -58,7 +59,9 @@ function App() {
       isUserInfLoaded,
       setIsUserInfLoaded
     }}>
+      
       <Router>
+        <ScrollToTop />
         <NavBar/>
         <Routes>
           <Route path='/login' element={isAuth ? <Navigate to='/'/> : <Login/>}/>

@@ -4,7 +4,7 @@ import Input from '../UI/inputs/Input'
 import classes from './CreateReviewForm.module.css'
 
 const CreateReviewForm = ({createReview, movieImg}) => {
-
+  console.log('render');
   const params = useParams()
   const [reviewInp, setReviewInp] = useState({title: '', review: ''})
 

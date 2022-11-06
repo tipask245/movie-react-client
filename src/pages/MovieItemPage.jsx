@@ -9,6 +9,7 @@ import WillWatchButton from '../components/UI/buttons/WillWatchButton'
 import WatchedButton from '../components/UI/buttons/WatchedButton'
 
 const MovieItemPage = () => {
+  console.log('render');
   const {isAuth, userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
   const params = useParams()
   const [movie, setMovie] = useState('')
@@ -62,7 +63,8 @@ const MovieItemPage = () => {
   const createReview = data => {
     axios.post('http://localhost:5000/movie/create_review', data)
     .then(result => {
-      setMovie({...movie, reviews: result.data})
+      setMovie({...movie, reviews: result.data.reviews})
+      setUserInf({...userInf, reviews: result.data.userData})
     })
     console.log("render")
   }
@@ -70,7 +72,7 @@ const MovieItemPage = () => {
   const addInList = async (name) => {
     const data = {
       id: params.title.split('_')[1],
-      name: localStorage.getItem('name'),
+      username: localStorage.getItem('name'),
       rating: movie.rating,
       listName: name
     }
@@ -81,11 +83,11 @@ const MovieItemPage = () => {
   const removeFromList = async (name) => {
     const data = {
       id: params.title.split('_')[1],
-      name: localStorage.getItem('name'),
+      username: localStorage.getItem('name'),
       rating: movie.rating,
       listName: name
     }
-    const res = await axios.post(`http://localhost:5000/movie/remove_from_list`, data)
+    const res = await axios.delete(`http://localhost:5000/movie/remove_from_list`, {data: data})
     setUserInf({...userInf, [name]: res.data})
   }
 

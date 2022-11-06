@@ -28,20 +28,20 @@ const AccountPage = () => {
 
   const deleteReview = (filmId, _id) => {
     setUserInf({...userInf, reviews: userInf.reviews.filter(el => el._id !== _id)})
-    axios.post('http://localhost:5000/movie/delete_review', {
+    axios.delete('http://localhost:5000/movie/delete_review', { data: {
       filmId,
       _id, 
       username: localStorage.getItem('name')
-    }).catch((e) => console.log(e))
+    }}).catch((e) => console.log(e))
   }
-
+  
   const deleteMovieInList = (filmId, listName) => {
     setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.filmId !== filmId)})
-    axios.post('http://localhost:5000/movie/remove_from_list', {
+    axios.delete('http://localhost:5000/movie/remove_from_list', { data: { 
       id: filmId,
       listName,
-      name: localStorage.getItem('name')
-    }).catch((e) => console.log(e))
+      username: localStorage.getItem('name')
+    }}).catch((e) => console.log(e))
   }
 
   return (
@@ -56,7 +56,7 @@ const AccountPage = () => {
           {
             // isLoaded &&
               userInf[currentList].length !== 0 
-                ? userInf[currentList].map(el => (
+                ? userInf[currentList].reverse().map(el => (
                   currentList === 'reviews'
                   ? 
                     <AccountReview 

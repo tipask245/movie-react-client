@@ -6,7 +6,6 @@ import './Login.css'
 import Input from '../components/UI/inputs/Input'
 
 const Login = () => {
-
   const {setRole, setIsAuth, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
   const [login, setLogin] = useState({username: '', password: ''})
   const [notFound, setNotFound] = useState({error: '', isFound: true})
@@ -18,7 +17,7 @@ const Login = () => {
       username: login.username,
       password : login.password
     }).catch((e) => {
-      // console.log(e.response.data)
+      // console.log(e.response.data
       setNotFound({error: e.response.data, isFound: false})
     })
     if (res && res.status === 200) {

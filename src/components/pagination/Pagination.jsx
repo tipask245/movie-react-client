@@ -1,7 +1,6 @@
 import React from 'react'
 import { getPagesArray } from '../../utils/pages'
 import classes from './Pagination.module.css'
-import { animateScroll as scroll } from 'react-scroll'
 
 const Pagination = ({totalPages, page, changePage}) => {
 
@@ -12,7 +11,11 @@ const Pagination = ({totalPages, page, changePage}) => {
       {pagesArray.map(p =>
         <button 
           onClick={() => {
-            scroll.scrollToTop()
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "instant", 
+            })
             changePage(p)
           }}
           className={page === p ? [classes.pagination_button, classes.page__active].join(' ') : classes.pagination_button}

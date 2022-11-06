@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import './Movies.css'
 import Modal from '../components/UI/Modals/Modal'
 import CreateMovieForm from '../components/Forms/CreateMovieForm'
-// import { useNavigate } from 'react-router-dom'
-import { getPagesArray, getTotalPages } from '../utils/pages'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { getTotalPages } from '../utils/pages'
 import Pagination from '../components/pagination/Pagination'
 import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
@@ -22,6 +22,12 @@ const Movies = () => {
   const [page, setPage] = useState(1)
   const [modal, setModal] = useState(false)
   const [isMovieLoading, setIsMovieLoading] = useState(true)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search])
+
   // const [filter, setFilter] = useState({sort: '', search: ''})
 
   // const sortedMovies = useMemo(() => {
@@ -35,15 +41,26 @@ const Movies = () => {
   // const sortedAndSeached = useMemo(() => {
   //   return sortedMovies.filter(el => el.title.toLowerCase().includes(filter.search))
   // }, [filter.search, sortedMovies])
+  if (location.search !== '') { 
 
+  }
 
   useEffect(() => {
-    fetchMovies(limit, page)
-    setIsCreate(false)
-  }, [isCreate, limit, page])
+    console.log('useEffect');
+    if (location.search !== '') {
+      let params = location.search.split('&')
+      let paramsValues = params[0].split('=')[1]
+      setPage(Number(paramsValues))
+      fetchMovies(limit, Number(paramsValues))
+      setIsCreate(false)
+    } else {
+      setPage(1)
+      fetchMovies(limit, 1)
+      setIsCreate(false)
+    }
+  }, [limit, location.search])
 
   const fetchMovies = async (limit, page) => {
-    // setIsMovieLoading(true)
     const res = await axios.get('http://localhost:5000/movie/get', {
       params: {
         limit: limit,
@@ -57,23 +74,35 @@ const Movies = () => {
     setIsMovieLoading(false)
   }
   // console.log(totalPages)
-  
-  const createMovie = async (newMovie) => {
+  const createMovie = (newMovie) => {
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }
-    await axios.post('http://localhost:5000/movie/create', newMovie, config).catch((e) => {
+    axios.post('http://localhost:5000/movie/create', newMovie, config).catch((e) => {
       console.log(e.response.data)
     })
     setIsCreate(true)
     setModal(false)
   }
 
+  const updateURL = () => {
+    navigate({
+      pathname: location.pathname,
+      search: `?${urlParams}`,
+    })
+  }
+
   const changePage = (page) => {
     setPage(page)
-    fetchMovies(limit, page)
+    if (page === 1) {
+      navigate('/')
+    } else {
+      urlParams.set("page", page.toString())
+      console.log(urlParams);
+      updateURL()
+    }
   }
 
   return (
@@ -99,11 +128,6 @@ const Movies = () => {
           : <MovieList movie={movie}/>
         }
       </div>
-      {/* {
-        isMovieLoading
-        ? <Loader/>
-        : <MovieList movie={movie}/>
-      } */}
       <Pagination totalPages={totalPages} page={page} changePage={changePage}/>
     </div>
   )
