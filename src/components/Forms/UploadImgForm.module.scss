@@ -1,0 +1,26 @@
+.upload_img_form {
+
+  width: 400px;
+  height: auto;
+
+  .drop_area, .drag_area{
+    border-radius: 5px;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px;  
+  }
+
+  .drop_area {
+    border: 3px solid brown;
+  }
+  
+  .drag_area {
+    border: 1px solid gray;
+    span {
+      color: gray;
+    }
+  }
+}

@@ -7,13 +7,14 @@
   display: none;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
-}
+  z-index: 10;
 
-.ModalContent {
-  padding: 30px;
-  border-radius: 5px;
-  min-width: 250px;
-  background-color: white;
+  .ModalContent {
+    padding: 30px;
+    border-radius: 5px;
+    min-width: 250px;
+    background-color: white;
+  }
 }
 
 .Modal.active {

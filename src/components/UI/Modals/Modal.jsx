@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './Modal.module.css'
+import classes from './Modal.module.scss'
 const Modal = ({children, visible, setVisible}) => {
   const rootClasses = [classes.Modal]
   if (visible) {

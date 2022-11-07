@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 // import axios from "axios";
 import { Link } from 'react-router-dom'
-import './NavBar.css'
+import './NavBar.scss'
 import { AuthContext } from "../context";
 import { useNavigate } from 'react-router-dom'
 import { transliterate as tr } from 'transliteration'
+import nf from '../nf.jpg'
+import { apiUrl } from '../config'
 
 const NavBar = () => {
 
-  const {isAuth, setIsAuth, role, setRole, setUserInf} = useContext(AuthContext)
+  const {isAuth, setIsAuth, role, setRole, userInf, setUserInf} = useContext(AuthContext)
   // useEffect(() => {
   //   if (localStorage.getItem('token') !== null) {
   //     console.log(localStorage.getItem('token'));
@@ -44,8 +46,9 @@ const NavBar = () => {
           {
             isAuth
             ? (<div className='user'>
-                <h3 className='user_name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
-                <a className='user_logout' onClick={() => logOut()}>Выйти</a>
+                <img src={userInf.avatar ? `${apiUrl}${userInf.avatar}` : nf} alt="" className="user__avatar" />
+                <h3 className='user__name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
+                <a className='user__logout' onClick={() => logOut()}>Выйти</a>
               </div>)
             : (<ul>
               <li >
