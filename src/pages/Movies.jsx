@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
-import './Movies.css'
+import './Movies.scss'
 import Modal from '../components/UI/Modals/Modal'
 import CreateMovieForm from '../components/Forms/CreateMovieForm'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -10,6 +10,8 @@ import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
 // import FilterSideBar from '../components/FilterSideBar'
 import { AuthContext } from '../context'
+import useDebounce from '../hooks/useDebounce'
+import SearchInput from '../components/UI/inputs/SearchInput'
 // import MovieFilter from '../components/filters/MovieFilter'
 
 const Movies = () => {
@@ -22,6 +24,9 @@ const Movies = () => {
   const [page, setPage] = useState(1)
   const [modal, setModal] = useState(false)
   const [isMovieLoading, setIsMovieLoading] = useState(true)
+  // const [searchValue, setSearchValue] = useState('')
+  // const [isSearching, setIsSearching] = useState(false)
+  // const debounceSearch = useDebounce(searchValue, 500)
   const navigate = useNavigate()
   const location = useLocation()
   const urlParams = useMemo(() => {
@@ -107,6 +112,8 @@ const Movies = () => {
 
   return (
     <div className="movies_wrap">
+      {/* <input type="text" className="search_movie" placeholder='Поиск...'/> */}
+      <SearchInput/>
       {
         role === 'admin' &&
         <div>

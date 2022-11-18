@@ -1,0 +1,60 @@
+.search_movie {
+  margin: 30px auto;
+  .search_movie__input {
+    display: block;
+    width: 350px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid brown;
+    outline: none;
+    margin: 0 auto;
+    padding: 3px;
+  }
+
+  .search_results {
+    width: 350px;
+    background: rgba(180, 180, 180);
+    border-radius: 5px;
+    margin-top: 5px;
+    position: absolute;
+    left: calc(50% - 175px);
+    p {
+      text-align: center;
+      margin: 40px;
+      font-size: 18px;
+      color: white;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  .result_movie {
+    display: flex;
+    max-width: 350px;
+    height: 90px;
+    margin: 10px;
+    padding: 5px;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.1s ease;
+
+    .info_wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px;
+    }
+
+    .result_movie__rating {
+      span {
+        color: brown;
+      }
+    }
+
+  }
+  
+  .result_movie:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+}
