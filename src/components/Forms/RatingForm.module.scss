@@ -1,0 +1,33 @@
+.RatingForm {
+  margin-top: 15px;
+  font-weight: 600;
+
+  .open_rating_form {
+    color: white;
+    background-color: brown;
+    border-radius: 5px;
+    height: 35px;
+    width: 160px;
+  }
+
+  .mark_list {
+    background-color: #ECECEC;
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+
+    .mark {
+      font-size: 16px;
+      font-weight: 400;
+      transition: ease 0.1s;
+    }
+    .mark:hover {
+      font-size: 24px;
+      font-weight: 600;
+      color: brown;
+    }
+  }
+} 
+

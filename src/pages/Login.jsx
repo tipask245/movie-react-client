@@ -51,7 +51,7 @@ const Login = () => {
           }}
         />
         <Input 
-          type="text" 
+          type="password" 
           placeholder='Пароль'
           onChange={e => {
             setLogin({...login, password: e.target.value.trim()})

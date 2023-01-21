@@ -7,15 +7,19 @@ import { AuthContext } from '../context'
 import ReviewCard from '../components/Cards/ReviewCard'
 import WillWatchButton from '../components/UI/buttons/WillWatchButton'
 import WatchedButton from '../components/UI/buttons/WatchedButton'
+import RatingForm from '../components/Forms/RatingForm'
+
 
 const MovieItemPage = () => {
   console.log('render');
-  const {isAuth, userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
+  const {setRole, setIsAuth, isAuth, userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
   const params = useParams()
   const [movie, setMovie] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
   const router = useNavigate()
   const movieId = params.title.split('_')[1]
+  const [isMovieInWatched, setIsMovieInWatched] = useState(false)
+  const [isMovieInWillWatched, setIsMovieInWillWatched] = useState(false)
 
   const movieInList = (list, movieId) => {
     if (list.length > 0) {
@@ -24,14 +28,6 @@ const MovieItemPage = () => {
     } else {
       return false
     }
-  }
-
-  let isMovieInWatched, isMovieInWillWatched
-
-  if (isUserInfLoaded && (userInf.watched.length > 0 || userInf.willWatch.length > 0)) {
-    isMovieInWatched = movieInList(userInf.watched, movieId)
-    isMovieInWillWatched = movieInList(userInf.willWatch, movieId)
-    console.log(isMovieInWatched, isMovieInWillWatched);
   }
 
   // const fetchMovieById = (movieId, isAuth) => {
@@ -59,6 +55,14 @@ const MovieItemPage = () => {
     fetchMovieById(movieId, isAuth)
     console.log("useEffect render")
   }, [])
+
+  useEffect(() => {
+    if (isUserInfLoaded && (userInf.watched.length > 0 || userInf.willWatch.length > 0)) {
+      setIsMovieInWatched(movieInList(userInf.watched, movieId))
+      setIsMovieInWillWatched(movieInList(userInf.willWatch, movieId))
+      console.log(isMovieInWatched, isMovieInWillWatched);
+    }
+  }, [isUserInfLoaded])
 
   const createReview = data => {
     axios.post('http://localhost:5000/movie/create_review', data)
@@ -91,15 +95,17 @@ const MovieItemPage = () => {
     setUserInf({...userInf, [name]: res.data})
   }
 
-  // const buttonStyle = (type) => {
-  //   userInf.userInf[type].forEach((el) => {
-  //     // console.log(el)
-  //     if (movie._id === el.filmId) {
-  //       return {fill: 'brown'}
-  //       console.log(123);
-  //     } 
-  //   })
-  // }
+  const addToMarkList = (mark) => {
+    setUserInf({...userInf, marks: [...userInf.marks, mark]})
+  }
+
+  const updateMarkList = (mark, filmId) => {
+      setUserInf({...userInf, marks: [...userInf.marks.map(el => el.filmId === filmId ? {...el, mark} : el)]})
+  }
+
+  const updateMovieRating = (rating) => {
+    setMovie({...movie, rating})
+  }
 
   return (
     <div className='movie_item_container'>
@@ -115,6 +121,13 @@ const MovieItemPage = () => {
           {
             isAuth && isUserInfLoaded
               ? <>
+                  <RatingForm 
+                    movieId={movieId} 
+                    markList={userInf.marks} 
+                    addToMarkList={addToMarkList}
+                    updateMarkList={updateMarkList}
+                    updateMovieRating={updateMovieRating}
+                  />
                   <WillWatchButton onClick={() => isMovieInWillWatched ? removeFromList('willWatch') : addInList('willWatch')} isMovieInWillWatched={isMovieInWillWatched}/> 
                   <WatchedButton onClick={() => isMovieInWatched ? removeFromList('watched') : addInList('watched')} isMovieInWatched={isMovieInWatched}/>
                 </>

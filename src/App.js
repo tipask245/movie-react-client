@@ -11,6 +11,7 @@ import axios from "axios";
 import { AuthContext } from "./context";
 import AccountPage from "./pages/AccountPage";
 import ScrollToTop from "./components/ScrollToTop";
+import { logOut } from "./utils/LogOut";
 
 function App() {
 
@@ -24,9 +25,13 @@ function App() {
     .then(res => {
       setUserInf(res.data.userInf)
       setIsUserInfLoaded(true)
-    }).catch(() => {
+      // setRole(res.data.role[0])
+      setIsAuth(true)
+    }).catch((e) => {
       // setIsUserInfLoaded(false)
-      console.log(123)
+      console.log(e)
+      localStorage.removeItem('token')
+      logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)
     })
   }
   
@@ -37,13 +42,16 @@ function App() {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       }
-      setIsAuth(true)
-      axios.post('http://localhost:5000/auth/checkAuth', {}, config).then(res => setRole(res.data.role[0])).catch(() => {
-        setIsAuth(false)
-        localStorage.removeItem('token')
-      })
+    //   setIsAuth(true)
+    //   axios.post('http://localhost:5000/auth/checkAuth', {}, config).then(res => setRole(res.data.role[0])).catch(() => {
+    //     // setIsAuth(false)
+    //     // localStorage.removeItem('token')
+    //     logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)
+    //   })
 
-      fetchUserInfo(config)
+      // if (isAuth) {
+        fetchUserInfo(config)
+      // }
       
     }
   }, [])

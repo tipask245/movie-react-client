@@ -50,14 +50,11 @@ const SearchInput = () => {
         placeholder='Поиск...' 
         onChange={e => setSearchValue(value => value = e.target.value)}
         onFocus={() => setIsFocus(true)}
-        // onBlur={() => setIsFocus(false)}
       />
       {
         isFocus &&
         <div className={classes.search_results}>
         {
-          // results === 'not found' &&
-          //   <h4>Ничего не найдено</h4>
             isSearching(results)
             ?
               results.map(movie => (

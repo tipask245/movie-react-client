@@ -7,10 +7,11 @@ import { useNavigate } from 'react-router-dom'
 import { transliterate as tr } from 'transliteration'
 import nf from '../nf.jpg'
 import { apiUrl } from '../config'
+import { logOut } from "../utils/LogOut"
 
 const NavBar = () => {
 
-  const {isAuth, setIsAuth, role, setRole, userInf, setUserInf} = useContext(AuthContext)
+  const {isAuth, setIsAuth, role, setRole, userInf, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
   // useEffect(() => {
   //   if (localStorage.getItem('token') !== null) {
   //     console.log(localStorage.getItem('token'));
@@ -24,14 +25,14 @@ const NavBar = () => {
   //   }
   // }, [])
   const router = useNavigate()
-  const logOut = () => {
-    localStorage.removeItem('token')
-    setRole('')
-    setUserInf([])
-    localStorage.removeItem('name')
-    localStorage.removeItem('id')
-    setIsAuth(false)
-  }
+  // const logOut = () => {
+  //   localStorage.removeItem('token')
+  //   setRole('')
+  //   setUserInf([])
+  //   localStorage.removeItem('name')
+  //   localStorage.removeItem('id')
+  //   setIsAuth(false)
+  // }
 
   const name = localStorage.getItem('name')
   
@@ -48,7 +49,7 @@ const NavBar = () => {
             ? (<div className='user'>
                 <img src={userInf.avatar ? `${apiUrl}${userInf.avatar}` : nf} alt="" className="user__avatar" />
                 <h3 className='user__name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
-                <a className='user__logout' onClick={() => logOut()}>Выйти</a>
+                <a className='user__logout' onClick={() => logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)}>Выйти</a>
               </div>)
             : (<ul>
               <li >

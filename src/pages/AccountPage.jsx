@@ -28,20 +28,30 @@ const AccountPage = () => {
 
   const deleteReview = (filmId, _id) => {
     setUserInf({...userInf, reviews: userInf.reviews.filter(el => el._id !== _id)})
-    axios.delete('http://localhost:5000/movie/delete_review', { data: {
-      filmId,
-      _id, 
-      username: localStorage.getItem('name')
-    }}).catch((e) => console.log(e))
+    axios.delete('http://localhost:5000/movie/delete_review', { 
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      data: {
+        filmId,
+        _id, 
+        username: localStorage.getItem('name')
+      }
+    }).catch((e) => console.log(e))
   }
   
   const deleteMovieInList = (filmId, listName) => {
     setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.filmId !== filmId)})
-    axios.delete('http://localhost:5000/movie/remove_from_list', { data: { 
-      id: filmId,
-      listName,
-      username: localStorage.getItem('name')
-    }}).catch((e) => console.log(e))
+    axios.delete('http://localhost:5000/movie/remove_from_list', { 
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      data: { 
+        id: filmId,
+        listName,
+        username: localStorage.getItem('name')
+      }
+    }).catch((e) => console.log(e))
   }
 
   return (

@@ -8,11 +8,8 @@ import { getTotalPages } from '../utils/pages'
 import Pagination from '../components/pagination/Pagination'
 import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
-// import FilterSideBar from '../components/FilterSideBar'
+import FilterSideBar from '../components/FilterSideBar'
 import { AuthContext } from '../context'
-import useDebounce from '../hooks/useDebounce'
-import SearchInput from '../components/UI/inputs/SearchInput'
-// import MovieFilter from '../components/filters/MovieFilter'
 
 const Movies = () => {
 
@@ -24,59 +21,53 @@ const Movies = () => {
   const [page, setPage] = useState(1)
   const [modal, setModal] = useState(false)
   const [isMovieLoading, setIsMovieLoading] = useState(true)
-  // const [searchValue, setSearchValue] = useState('')
-  // const [isSearching, setIsSearching] = useState(false)
-  // const debounceSearch = useDebounce(searchValue, 500)
+  const [sortSelect, setSortSelect] = useState('default')
   const navigate = useNavigate()
   const location = useLocation()
   const urlParams = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search])
 
-  // const [filter, setFilter] = useState({sort: '', search: ''})
-
-  // const sortedMovies = useMemo(() => {
-  //   console.log('getSortedPosts')
-  //   if (filter.sort) {
-  //     return filter.sort === 'id' ? [...movie].sort((a,b) => a[filter.sort] - b[filter.sort]) :[...movie].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-  //   }
-  //   return movie
-  // }, [filter.sort, movie])
-
-  // const sortedAndSeached = useMemo(() => {
-  //   return sortedMovies.filter(el => el.title.toLowerCase().includes(filter.search))
-  // }, [filter.search, sortedMovies])
   if (location.search !== '') { 
 
   }
 
   useEffect(() => {
     console.log('useEffect');
-    if (location.search !== '') {
-      let params = location.search.split('&')
-      let paramsValues = params[0].split('=')[1]
-      setPage(Number(paramsValues))
-      fetchMovies(limit, Number(paramsValues))
-      setIsCreate(false)
-    } else {
+    const parameters = {page: 1, limit}
+    if (urlParams.toString() === '') {
       setPage(1)
-      fetchMovies(limit, 1)
+      setSortSelect('default')
       setIsCreate(false)
     }
+    if (urlParams.has('page')) {
+      let paramValue = urlParams.get('page')
+      // console.log(paramValue);
+      setPage(Number(paramValue))
+      parameters['page'] = Number(paramValue)
+      setIsCreate(false)
+    } 
+    if (urlParams.has('sort')) { //dopisat
+      console.log('хуй пизда')
+      let paramValue = urlParams.get('sort')
+      console.log(urlParams.get('sort'))
+      setSortSelect(paramValue)
+      parameters['sort'] = paramValue
+      setIsCreate(false)
+    } 
+    fetchMovies(parameters)
   }, [limit, location.search])
 
-  const fetchMovies = async (limit, page) => {
+  const fetchMovies = async (parameters) => {
     const res = await axios.get('http://localhost:5000/movie/get', {
-      params: {
-        limit: limit,
-        page: page
-      }
+      params: parameters
     })
     const totalCount = res.data.totalDocs
     setTotalPages(getTotalPages(totalCount, limit))
     // console.log(totalCount)
     setMovie(res.data.docs)
     setIsMovieLoading(false)
+    console.log(res.data.docs);
   }
   // console.log(totalPages)
   const createMovie = (newMovie) => {
@@ -101,34 +92,40 @@ const Movies = () => {
 
   const changePage = (page) => {
     setPage(page)
-    if (page === 1) {
+    if (page === 1 && sortSelect === 'default') {
       navigate('/')
     } else {
       urlParams.set("page", page.toString())
-      console.log(urlParams);
+      console.log(urlParams)
+      updateURL()
+    }
+  }
+
+  const setSort = (sort) => {
+    // setSortSelect(sort)
+    if (sort === 'default') {
+      navigate('/')
+    } else {
+      setSortSelect(sort)
+      urlParams.set("sort", sort)
+      console.log(urlParams)
       updateURL()
     }
   }
 
   return (
     <div className="movies_wrap">
-      {/* <input type="text" className="search_movie" placeholder='Поиск...'/> */}
-      <SearchInput/>
+      <FilterSideBar setSort={setSort} sortSelect={sortSelect} />
       {
         role === 'admin' &&
         <div>
-        <button className='movies_create' onClick={() => setModal(true)}>Создать фильм</button>
-        <Modal visible={modal} setVisible={setModal}>
-          <CreateMovieForm setIsCreate={setIsCreate} createMovie={createMovie}/>
-        </Modal>
-      </div>
+          <button className='movies_create' onClick={() => setModal(true)}>Создать фильм</button>
+          <Modal visible={modal} setVisible={setModal}>
+            <CreateMovieForm setIsCreate={setIsCreate} createMovie={createMovie}/>
+          </Modal>
+        </div>
       }
-      {/* <MovieFilter
-        filter={filter}
-        setFilter={setFilter}
-      /> */}
       <div className="wrapper">
-        {/* <FilterSideBar/> */}
         {
           isMovieLoading
           ? <Loader/>
