@@ -30,11 +30,6 @@ const CreateReviewForm = ({createReview, movieImg}) => {
     }
     createReview(data)
     setReviewInp({title: '', review: ''})
-    // setReviewInp({
-    //   title: '',
-    //   review: ''
-    // })
-    // reviewInp
   }
 
   const isFilled = () => {

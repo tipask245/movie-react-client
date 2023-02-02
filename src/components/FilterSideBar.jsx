@@ -11,8 +11,8 @@ const FilterSideBar = ({setSort, sortSelect}) => {
         options={[
           {value: 'default', name: 'По умолчанию'},
           {value: 'asc', name: 'По алфавиту'},
-          {value: 'rating-ascending', name: 'Оценка по возрастанию'},
-          {value: 'rating-descending', name: 'Оценка по убыванию'}
+          {value: 'rating-asc', name: 'Оценка по возрастанию'},
+          {value: 'rating-desc', name: 'Оценка по убыванию'}
         ]}
         setSort={setSort}
         sortSelect={sortSelect}

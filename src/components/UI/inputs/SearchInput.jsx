@@ -58,8 +58,8 @@ const SearchInput = () => {
             isSearching(results)
             ?
               results.map(movie => (
-                <div className={classes.result_movie} key={movie._id} onClick={() => router(`/${tr(movie.title).toLowerCase()}_${movie._id}`)}>
-                  <img src={movie.img} />
+                <div className={classes.result_movie} key={movie._id} onClick={() => router(`/${tr(movie.title).toLowerCase()}_${movie.id}`)}>
+                  <img src={movie.img} alt={movie.title} />
                   <div className={classes.info_wrap}>
                     <h5 className={classes.result_movie__title}>{movie.title}</h5>
                     <h5 className={classes.result_movie__rating}>Оценка: <span>{movie.rating}</span></h5>

@@ -6,15 +6,20 @@ import axios from 'axios'
 const Registration = () => {
 
   const [registration, setRegistration] = useState({username: '', password: ''})
-  const [notFound, setNotFound] = useState({error: '', isFound: true})
+  const [notFound, setNotFound] = useState({error: '', isFound: false})
 
   const [isSuccess, setIsSuccess] = useState(false)
 
   const registrationReq = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5000/auth/registration', registration).then(() => setIsSuccess(true)).catch((e) => {
+    axios.post('http://localhost:5000/auth/registration', registration)
+    .then(() => {
+      setIsSuccess(true)
+      setNotFound({error: '', isFound: false})
+    })
+    .catch((e) => {
       console.log(e.response.data)
-      setNotFound({error: e.response.data, isFound: false})
+      setNotFound({error: e.response.data, isFound: true})
     })
   }
 
@@ -26,7 +31,7 @@ const Registration = () => {
     <div className='registration'>
       <h1>Регистрация</h1>
       <form className="registration_form">
-      { !notFound.isFound ? <p>{notFound.error}</p> : ''}
+      { notFound.isFound ? <p>{notFound.error}</p> : ''}
       {
         isSuccess &&
         <p className='success'>Пользователь успешно зарегистрирован</p>

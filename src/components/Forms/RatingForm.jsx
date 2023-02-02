@@ -10,13 +10,13 @@ const RatingForm = ({markList, movieId, addToMarkList, updateMarkList, updateMov
   const marks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   const isMovieRated = (list, movieId) => {
-    return list.find(el => el.filmId === movieId)
+    return list.find(el => String(el.id) === movieId)
   }
 
   
   useEffect(() => {
     setUserMark(isMovieRated(markList, movieId))
-  }, [markList])
+  }, [markList, movieId])
   
   const rateFilm = (value) => {
     const config = {
@@ -33,7 +33,7 @@ const RatingForm = ({markList, movieId, addToMarkList, updateMarkList, updateMov
 
         !userMark
         ? addToMarkList(res.data.userData)
-        : updateMarkList(res.data.userData.mark, res.data.userData.filmId)
+        : updateMarkList(res.data.userData.mark, res.data.userData.id)
          
         updateMovieRating(res.data.rating)
       })

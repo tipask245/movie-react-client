@@ -27,29 +27,27 @@ const AccountPage = () => {
   // }
 
   const deleteReview = (filmId, _id) => {
-    setUserInf({...userInf, reviews: userInf.reviews.filter(el => el._id !== _id)})
+    setUserInf({...userInf, reviews: userInf.reviews.filter(el => el.id !== _id)})
     axios.delete('http://localhost:5000/movie/delete_review', { 
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       data: {
         filmId,
-        _id, 
-        username: localStorage.getItem('name')
+        _id 
       }
     }).catch((e) => console.log(e))
   }
   
   const deleteMovieInList = (filmId, listName) => {
-    setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.filmId !== filmId)})
+    setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.id !== filmId)})
     axios.delete('http://localhost:5000/movie/remove_from_list', { 
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       data: { 
         id: filmId,
-        listName,
-        username: localStorage.getItem('name')
+        listName
       }
     }).catch((e) => console.log(e))
   }
@@ -70,7 +68,7 @@ const AccountPage = () => {
                   currentList === 'reviews'
                   ? 
                     <AccountReview 
-                      filmImg={el.filmImg}
+                      filmImg={el.img}
                       filmTitle={el.filmTitle}
                       filmRating={el.filmRating} 
                       reviewTitle={el.reviewTitle} 
@@ -78,17 +76,17 @@ const AccountPage = () => {
                       reviewId={el._id}
                       filmId={el.filmId}  
                       deleteReview={deleteReview}
-                      key={el._id} 
+                      key={el.id} 
                     />
                   : <AccountMovieCard 
-                      filmImg={el.filmImg}
-                      filmTitle={el.filmTitle}
-                      filmRating={el.filmRating}
-                      filmId={el.filmId} 
+                      filmImg={el.img}
+                      filmTitle={el.title}
+                      filmRating={el.rating}
+                      filmId={el.id} 
                       deleteMovie={true}
                       deleteMovieInList={deleteMovieInList}
                       listName={currentList}
-                      key={el._id} 
+                      key={el.id} 
                     />
                   ))
                 : <p className="account__body__not_found">Ничего не найдено</p>
