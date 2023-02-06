@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import classes from './MovieCard.module.css'
 import nf from '../../nf.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -6,8 +6,9 @@ import { transliterate as tr } from 'transliteration'
 
 // /${tr(movie.type).toLowerCase()}
 
-const MovieCard = ({movie}) => {
+const MovieCard: FC<any> = ({movie})=> {
   const router = useNavigate()
+
   return (
     <div className={classes.movie_card} onClick={() => router(`/${tr(movie.title).toLowerCase()}_${movie.id}`)}>
       <img src={movie.img ? movie.img : nf} alt="not-found" className={classes.movie_img}/>

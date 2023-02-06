@@ -1,5 +1,5 @@
 import React from 'react'
-import MovieCard from './Cards/MovieCard'
+import MovieCard from './Cards/MovieCard.tsx'
 
 const MovieList = ({movie}) => {
   return (

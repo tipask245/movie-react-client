@@ -3,7 +3,12 @@ import classes from './FilterSideBar.module.css'
 import SearchInput from './UI/inputs/SearchInput'
 import SortMovieSelect from './UI/selects/SortMovieSelect'
 
-const FilterSideBar = ({setSort, sortSelect}) => {
+interface SideBarProps {
+  setSort: React.Dispatch<React.SetStateAction<string>>;
+  sortSelect: string;
+}
+
+const FilterSideBar: React.FC<SideBarProps> = ({setSort, sortSelect}) => {
   return (
     <div className={classes.filter_side_bar}>
       <SearchInput />

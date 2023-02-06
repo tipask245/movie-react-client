@@ -30,17 +30,6 @@ const MovieItemPage = () => {
     }
   }
 
-  // const fetchMovieById = (movieId, isAuth) => {
-  //   axios.get(`http://localhost:5000/movie/get_byid/${movieId}/${isAuth}`)
-  //     .then(result => {
-  //       if (result.data === '') {
-  //         router('/404')
-  //       }
-  //       setMovie(result.data[0])
-  //       setIsLoaded(true)
-  //     })
-  // }
-
   useEffect(() => {
     const fetchMovieById = (movieId, isAuth) => {
       axios.get(`http://localhost:5000/movie/get_byid/${movieId}/${isAuth}`)
@@ -72,14 +61,11 @@ const MovieItemPage = () => {
     }
     axios.post('http://localhost:5000/movie/create_review', data, {headers})
     .then(result => {
-      setMovie({...movie, reviews: result.data.reviews})
-      setUserInf({...userInf, reviews: result.data.userData})
+      setMovie({...movie, reviews: [...movie.reviews, result.data.filmData]})
+      setUserInf({...userInf, reviews: [...userInf.reviews.reverse(), result.data.userData].reverse()})
     })
     console.log("render")
   }
-
-    
-  
 
   const addInList = async (name) => {
     const data = {
@@ -109,7 +95,7 @@ const MovieItemPage = () => {
   }
 
   const addToMarkList = (mark) => {
-    setUserInf({...userInf, marks: [...userInf.marks, mark]})
+    setUserInf({...userInf, marks: [...userInf.marks.reverse(), mark].reverse()})
   }
 
   const updateMarkList = (mark, filmId) => {
@@ -164,12 +150,12 @@ const MovieItemPage = () => {
         {
           isLoaded &&
             movie.reviews.length !== 0
-            ? movie.reviews.map((el, ind) => (
+            ? movie.reviews.map(el => (
               <ReviewCard 
-                key={el._id}
-                username={el.name}
-                title={el.reviewTitle}
-                body={el.reviewBody}
+                key={el.id}
+                username={el.username}
+                title={el.title}
+                body={el.body}
               />
             ))
             : <h4 className='reviews_nf'>Рецензий пока нет</h4>

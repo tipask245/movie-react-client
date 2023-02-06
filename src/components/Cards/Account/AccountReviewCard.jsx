@@ -15,7 +15,7 @@ const AccountReview = ({filmImg, filmTitle, filmRating, reviewTitle, reviewBody,
           <h4 className="review_info__title">{reviewTitle}</h4>
           <p className="review_info__body">{reviewBody}</p>
         </div>
-        <button className="review_info__delete" onClick={() => deleteReview(filmId, reviewId)}>
+        <button className="review_info__delete" onClick={() => deleteReview(reviewId)}>
         </button>
       </div>
     </div>

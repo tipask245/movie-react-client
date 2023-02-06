@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AccountInfo from '../components/AccountInfo'
 import AccountList from '../components/AccountList'
 import AccountReview from '../components/Cards/Account/AccountReviewCard'
@@ -26,15 +26,14 @@ const AccountPage = () => {
   //   setIsLoaded(true)
   // }
 
-  const deleteReview = (filmId, _id) => {
-    setUserInf({...userInf, reviews: userInf.reviews.filter(el => el.id !== _id)})
+  const deleteReview = (reviewId) => {
+    setUserInf({...userInf, reviews: userInf.reviews.filter(el => el.id !== reviewId)})
     axios.delete('http://localhost:5000/movie/delete_review', { 
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       data: {
-        filmId,
-        _id 
+        reviewId
       }
     }).catch((e) => console.log(e))
   }
@@ -69,12 +68,12 @@ const AccountPage = () => {
                   ? 
                     <AccountReview 
                       filmImg={el.img}
-                      filmTitle={el.filmTitle}
-                      filmRating={el.filmRating} 
-                      reviewTitle={el.reviewTitle} 
-                      reviewBody={el.reviewBody}
-                      reviewId={el._id}
-                      filmId={el.filmId}  
+                      filmTitle={el.title}
+                      filmRating={el.rating} 
+                      reviewTitle={el.review_title} 
+                      reviewBody={el.review_body}
+                      reviewId={el.id}
+                      filmId={el.film_id}  
                       deleteReview={deleteReview}
                       key={el.id} 
                     />
