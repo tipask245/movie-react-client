@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import CreateReviewForm from '../components/CreateReviewForm'
+import CreateReviewForm from '../components/Forms/CreateReviewForm'
 
 test('CreateReviewForm test', () => {
   render(<CreateReviewForm/>)

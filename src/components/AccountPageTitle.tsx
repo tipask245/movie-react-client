@@ -1,10 +1,10 @@
 import React from 'react'
 
-interface TitleProps {
+interface ITitleProps {
   title: string
 }
 
-const AccountPageTitle: React.FC<TitleProps>= ({title}: TitleProps) => {
+const AccountPageTitle: React.FC<ITitleProps>= ({title}) => {
   
   const titleObj: object = {
     will_watch: 'Буду смотреть',

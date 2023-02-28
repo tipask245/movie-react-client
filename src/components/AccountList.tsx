@@ -1,11 +1,11 @@
 import React from 'react'
 
-interface AccountListProps {
+interface IAccountListProps {
   setCurrentList: React.Dispatch<React.SetStateAction<string>>;
   currentList: string
 }
 
-const AccountList: React.FC<AccountListProps> = ({setCurrentList, currentList}) => {
+const AccountList: React.FC<IAccountListProps> = ({setCurrentList, currentList}) => {
 
   const isCurrent = (param: string) => {
     if (currentList === param) {

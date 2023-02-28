@@ -20,8 +20,8 @@ function App() {
   const [userInf, setUserInf] = useState([])
   const [isUserInfLoaded, setIsUserInfLoaded] = useState(false)
 
-  const fetchUserInfo = async (config) => {
-    await axios.post('http://localhost:5000/auth/getUserInformation', {id: localStorage.getItem('id')}, config)
+  const fetchUserInfo = (config) => {
+    axios.post('http://localhost:5000/auth/getUserInformation', {}, config)
     .then(res => {
       setUserInf(res.data.userInf)
       setIsUserInfLoaded(true)
@@ -36,7 +36,7 @@ function App() {
   }
   
   useEffect(() => {
-    if (localStorage.getItem('token') !== null) {
+    if (localStorage.getItem('token')) {
       const config = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
