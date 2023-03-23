@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../context'
 import nf from '../nf.jpg'
 import UploadImgForm from './Forms/UploadImgForm'

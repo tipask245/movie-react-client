@@ -42,17 +42,7 @@ function App() {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       }
-    //   setIsAuth(true)
-    //   axios.post('http://localhost:5000/auth/checkAuth', {}, config).then(res => setRole(res.data.role[0])).catch(() => {
-    //     // setIsAuth(false)
-    //     // localStorage.removeItem('token')
-    //     logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)
-    //   })
-
-      // if (isAuth) {
-        fetchUserInfo(config)
-      // }
-      
+      fetchUserInfo(config)
     }
   }, [])
   return (
