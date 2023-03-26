@@ -2,7 +2,13 @@ import React from 'react'
 import { getPagesArray } from '../../utils/pages'
 import classes from './Pagination.module.css'
 
-const Pagination = ({totalPages, page, changePage}) => {
+interface IPagination {
+  totalPages: number,
+  page: number, 
+  changePage:  React.Dispatch<React.SetStateAction<number>>
+}
+
+const Pagination: React.FC<IPagination> = ({totalPages, page, changePage}: IPagination) => {
 
   const pagesArray = getPagesArray(totalPages)
 
@@ -13,8 +19,7 @@ const Pagination = ({totalPages, page, changePage}) => {
           onClick={() => {
             window.scrollTo({
               top: 0,
-              left: 0,
-              behavior: "instant", 
+              left: 0
             })
             changePage(p)
           }}

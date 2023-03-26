@@ -1,10 +1,8 @@
-import axios from 'axios'
-import React from 'react'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { transliterate as tr } from 'transliteration'
 import useDebounce from '../../../hooks/useDebounce'
-import { apiUrl } from '../../../config'
+import movieAPI from '../../../api/movieAPI'
 
 import classes from './SearchInput.module.scss'
 
@@ -20,7 +18,7 @@ const SearchInput = () => {
   useEffect(() => {
     if (debounceSearch) {
       console.log('vvod');
-      axios.get(`${apiUrl}movie/search_movie`, {
+      movieAPI.get('/movie/search_movie', {
         params: {
           search: searchValue
         }

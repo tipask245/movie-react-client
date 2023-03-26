@@ -5,36 +5,35 @@
   border-radius: 5px;
   margin: 0 auto;
   margin-top: 250px;
-}
 
-.login h1 {
-  text-align: center;
-  margin-bottom: 50px;
+  p {
+    margin-bottom: 10px;
+    text-align: center;
+    color: brown;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 50px;
+  }
 }
 
 .login_form {
   display: grid;
-}
 
-.login_form > p{
-  margin-bottom: 10px;
-  text-align: center;
-  color: brown;
-}
+  input {
+    width: 250px;
+    margin: 0 auto;
+    border: none;
+    background-color: #ECECEC;
+    margin-bottom: 20px;
+  }
 
-.login > p{
-  margin-bottom: 10px;
-  text-align: center;
-  color: brown;
-}
-
-
-.login_form > input{
-  width: 250px;
-  margin: 0 auto;
-  border: none;
-  background-color: #ECECEC;
-  margin-bottom: 20px;
+  p {
+    margin-bottom: 10px;
+    text-align: center;
+    color: brown;
+  }
 }
 
 .form_button {

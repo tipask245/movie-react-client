@@ -1,13 +1,13 @@
-import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../context'
 import AccountInfo from '../components/AccountInfo'
 import AccountList from '../components/AccountList'
 import AccountReview from '../components/Cards/Account/AccountReviewCard'
+import AccountPageTitle from '../components/AccountPageTitle'
+import AccountMovieCard from '../components/Cards/Account/AccountMovieCard'
+import movieAPI from '../api/movieAPI'
 import './AccountPage.scss'
 import './AccountBody.scss'
-import AccountPageTitle from '../components/AccountPageTitle'
-import { AuthContext } from '../context'
-import AccountMovieCard from '../components/Cards/Account/AccountMovieCard'
 
 const AccountPage = () => {
 
@@ -28,7 +28,7 @@ const AccountPage = () => {
 
   const deleteReview = (reviewId) => {
     setUserInf({...userInf, reviews: userInf.reviews.filter(el => el.id !== reviewId)})
-    axios.delete('http://localhost:5000/movie/delete_review', { 
+    movieAPI.delete('/movie/delete_review', { 
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -40,7 +40,7 @@ const AccountPage = () => {
   
   const deleteMovieInList = (filmId, listName) => {
     setUserInf({...userInf, [listName]: userInf[listName].filter(el => el.id !== filmId)})
-    axios.delete('http://localhost:5000/movie/remove_from_list', { 
+    movieAPI.delete('/movie/remove_from_list', { 
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -82,7 +82,6 @@ const AccountPage = () => {
                       filmTitle={el.title}
                       filmRating={el.rating}
                       filmId={el.id} 
-                      deleteMovie={true}
                       deleteMovieInList={deleteMovieInList}
                       listName={currentList}
                       key={el.id} 

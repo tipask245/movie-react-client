@@ -65,7 +65,7 @@ function App() {
           <Route path='/login' element={isAuth ? <Navigate to='/'/> : <Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/' element={<Movies/>}/>
-          <Route path='/:title' element={<MovieItemPage/>} />
+          <Route path='/movie/:title' element={<MovieItemPage/>} />
           <Route path='/account/:name' element={<AccountPage/>} />
           <Route path='*' element={<Navigate to='/404'/>}/>
           <Route path='/404' element={<ErrorPage/>}/>

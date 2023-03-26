@@ -11,7 +11,7 @@ import { logOut } from "../utils/LogOut"
 
 const NavBar = () => {
 
-  const {isAuth, setIsAuth, role, setRole, userInf, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
+  const {isAuth, setIsAuth, setRole, userInf, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
   // useEffect(() => {
   //   if (localStorage.getItem('token') !== null) {
   //     console.log(localStorage.getItem('token'));
@@ -49,7 +49,7 @@ const NavBar = () => {
             ? (<div className='user'>
                 <img src={userInf.avatar ? `${apiUrl}${userInf.avatar}` : nf} alt="" className="user__avatar" />
                 <h3 className='user__name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
-                <a className='user__logout' onClick={() => logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)}>Выйти</a>
+                <button className='user__logout' onClick={() => logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)}>Выйти</button>
               </div>)
             : (<ul>
               <li >

@@ -3,12 +3,12 @@ import { transliterate as tr } from 'transliteration'
 import { useNavigate } from 'react-router-dom'
 import classes from './AccountMovieCard.module.scss'
 
-const AccountMovieCard = ({filmTitle, filmId, filmImg, filmRating, deleteMovie, listName, deleteMovieInList}) => {
+const AccountMovieCard = ({filmTitle, filmId, filmImg, filmRating, listName, deleteMovieInList}) => {
   const router = useNavigate()
   return (
     <div className={classes.account_film} onClick={e => {
       e.stopPropagation()
-      router(`/${tr(filmTitle).toLowerCase()}_${filmId}`)
+      router(`/movie/${tr(filmTitle).toLowerCase()}_${filmId}`)
     }}>
       <img className={classes.account_film__img} src={filmImg} alt="" />
       <div className={classes.film_info}>

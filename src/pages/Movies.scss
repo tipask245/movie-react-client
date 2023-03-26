@@ -38,6 +38,7 @@ body {
   margin: 0;
   padding: 0;
   justify-content: center;
+  gap: 20px;
 }
 
 .movies_nf {
@@ -48,5 +49,4 @@ body {
 
 .movies_item {
   cursor: pointer;
-  margin: 10px;
 }

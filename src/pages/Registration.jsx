@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import './Registration.css'
+import { useState } from 'react'
+import './Registration.scss'
 import Input from '../components/UI/inputs/Input'
-import axios from 'axios'
+import movieAPI from '../api/movieAPI'
 
 const Registration = () => {
 
@@ -12,7 +12,7 @@ const Registration = () => {
 
   const registrationReq = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5000/auth/registration', registration)
+    movieAPI.post('/auth/registration', registration)
     .then(() => {
       setIsSuccess(true)
       setNotFound({error: '', isFound: false})

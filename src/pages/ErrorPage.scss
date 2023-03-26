@@ -1,0 +1,15 @@
+.error_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 50px);
+
+    .error_page_title {
+        font-size: 48px;
+    }
+
+    .error_page_text {
+        font-size: 20px;
+    }
+}

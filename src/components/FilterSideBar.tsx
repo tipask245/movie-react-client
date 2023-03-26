@@ -10,7 +10,7 @@ interface ISideBarProps {
 
 const FilterSideBar: React.FC<ISideBarProps> = ({setSort, sortSelect}) => {
   return (
-    <div className={classes.filter_side_bar}>
+    <section className={classes.filter_side_bar}>
       <SearchInput />
       <SortMovieSelect 
         options={[
@@ -22,7 +22,7 @@ const FilterSideBar: React.FC<ISideBarProps> = ({setSort, sortSelect}) => {
         setSort={setSort}
         sortSelect={sortSelect}
       />
-    </div>
+    </section>
   )
 }
 

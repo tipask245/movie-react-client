@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
-import axios from 'axios'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '../context'
-import './Login.css'
+import './Login.scss'
 import Input from '../components/UI/inputs/Input'
+import movieAPI from '../api/movieAPI'
 
 const Login = () => {
   const {setRole, setIsAuth, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
@@ -11,27 +10,25 @@ const Login = () => {
   const [notFound, setNotFound] = useState({error: '', isFound: true})
   // const {setIsAuth} = useContext(AuthContext)
   
-  const loginReq = async (e) => {
+  const loginReq = (e) => {
     e.preventDefault()
-    let res = await axios.post('http://localhost:5000/auth/login', {
+    movieAPI.post('/auth/login', {
       username: login.username,
       password : login.password
-    }).catch((e) => {
-      // console.log(e.response.data
-      setNotFound({error: e.response.data, isFound: false})
     })
-    if (res && res.status === 200) {
+    .then(res => {
       setNotFound({...notFound, isFound: true})
-      console.log(res.data)
       localStorage.setItem('token', res.data.token)
-      setRole(res.data.role[0])
       localStorage.setItem('name', res.data.userInf.username)
       localStorage.setItem('id', res.data.id)
+      setRole(res.data.role[0])
       setIsAuth(true)
       setUserInf(res.data.userInf)
       setIsUserInfLoaded(true)
-    }
-    
+    })
+    .catch((e) => {
+      setNotFound({error: e.response.data, isFound: false})
+    })
   }
 
   const isFilled = () => {
@@ -41,7 +38,10 @@ const Login = () => {
   return (
     <div className='login'>
       <h1>Авторизация</h1>
-      {!notFound.isFound ? <p>{notFound.error}</p>: ''}
+      {
+        !notFound.isFound && 
+          <p>{notFound.error}</p>
+      }
       <form className="login_form">
         <Input 
           type="text" 

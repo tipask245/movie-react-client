@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react'
-import axios from 'axios'
+import { useContext, useEffect, useState, useMemo } from 'react'
 import './Movies.scss'
-import Modal from '../components/UI/Modals/Modal'
+import Modal from '../components/UI/modals/Modal'
 import CreateMovieForm from '../components/Forms/CreateMovieForm'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { getTotalPages } from '../utils/pages'
@@ -10,12 +9,13 @@ import MovieList from '../components/MovieList'
 import Loader from '../components/Loaders/Loader'
 import FilterSideBar from '../components/FilterSideBar'
 import { AuthContext } from '../context'
+import movieAPI from '../api/movieAPI'
 
 const Movies = () => {
 
   const {role} = useContext(AuthContext)
   const [isCreate, setIsCreate] = useState(false)
-  const [movie, setMovie] = useState([])
+  const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(0)
   const [limit, setLimit] = useState(25)
   const [page, setPage] = useState(1)
@@ -48,7 +48,6 @@ const Movies = () => {
       setIsCreate(false)
     } 
     if (urlParams.has('sort')) { //dopisat
-      console.log('хуй пизда')
       let paramValue = urlParams.get('sort')
       console.log(urlParams.get('sort'))
       setSortSelect(paramValue)
@@ -59,13 +58,13 @@ const Movies = () => {
   }, [limit, location.search])
 
   const fetchMovies = async (parameters) => {
-    const res = await axios.get('http://localhost:5000/movie/get', {
+    const res = await movieAPI.get('/movie/get', {
       params: parameters
     })
     const totalCount = res.data.totalDocs
     setTotalPages(getTotalPages(totalCount, limit))
     // console.log(totalCount)
-    setMovie(res.data.docs)
+    setMovies(res.data.docs)
     setIsMovieLoading(false)
     console.log(res.data.docs);
   }
@@ -76,7 +75,7 @@ const Movies = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }
-    axios.post('http://localhost:5000/movie/create', newMovie, config).catch((e) => {
+    movieAPI.post('/movie/create', newMovie, config).catch((e) => {
       console.log(e.response.data)
     })
     setIsCreate(true)
@@ -129,7 +128,7 @@ const Movies = () => {
         {
           isMovieLoading
           ? <Loader/>
-          : <MovieList movie={movie}/>
+          : <MovieList movies={movies}/>
         }
       </div>
       <Pagination totalPages={totalPages} page={page} changePage={changePage}/>

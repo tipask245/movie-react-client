@@ -90,7 +90,7 @@ const MovieItemPage = () => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
-    const res = await axios.delete(`http://localhost:5000/movie/remove_from_list`, {headers, data})
+    await axios.delete(`http://localhost:5000/movie/remove_from_list`, {headers, data})
     setUserInf({...userInf, [name]: [...userInf[name].filter(el => String(el.id) !== data.id)]})
   }
 

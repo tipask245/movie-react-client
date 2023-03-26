@@ -1,12 +1,20 @@
 import React from 'react'
 
-interface ITitleProps {
-  title: string
+
+interface ITitleObj {
+  will_watch: string,
+  watched: string,
+  reviews: string,
+  marks: string
 }
 
-const AccountPageTitle: React.FC<ITitleProps>= ({title}) => {
+interface IAccountPageTitleProp {
+  title: keyof ITitleObj
+}
+
+const AccountPageTitle: React.FC<IAccountPageTitleProp>= ({title}: IAccountPageTitleProp) => {
   
-  const titleObj: object = {
+  const titleObj: ITitleObj = {
     will_watch: 'Буду смотреть',
     watched: 'Просмотрено',
     reviews: 'Рецензии',
@@ -14,7 +22,7 @@ const AccountPageTitle: React.FC<ITitleProps>= ({title}) => {
   }
 
   return (
-    <h3 className="account__title">{titleObj[title as keyof typeof titleObj]}</h3>
+    <h3 className="account__title">{titleObj[title]}</h3>
   )
 }
 

@@ -1,8 +1,13 @@
-import React from 'react'
+import './ErrorPage.scss'
 
 const ErrorPage = () => {
   return (
-    <div>ErrorPage</div>
+    <section className='error_page'>
+      <h1 className="error_page_title">404</h1>
+      <p className="error_page_text">
+        Произошла ошибка, страница не найдена
+      </p>
+    </section>
   )
 }
 
