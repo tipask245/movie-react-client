@@ -43,8 +43,6 @@ const MovieItemPage = () => {
         })
     }
     fetchMovieById(movieId, isAuth)
-    // console.log("useEffect render")
-    
   }, [])
   
   useEffect(() => {

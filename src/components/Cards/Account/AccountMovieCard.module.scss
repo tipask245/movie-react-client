@@ -1,4 +1,5 @@
 .account_film {
+
   max-width: 600px;
   margin: 0 auto;
   padding: 10px;
@@ -9,15 +10,19 @@
   border-radius: 5px;
   margin-bottom: 5px;
   display: flex;
+
   .film_info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 5px;
+
     span {
       color: brown;
     }
+
   }
+  
   .account_film__title {
     height: fit-content;
     margin: auto 5px;

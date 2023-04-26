@@ -14,17 +14,6 @@ const AccountPage = () => {
   const {userInf, setUserInf, isUserInfLoaded} = useContext(AuthContext)
   const [currentList, setCurrentList] = useState('reviews')
   
-  // const fetchUserInfo = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('token')}`
-  //     }
-  //   }
-  //   await axios.post('http://localhost:5000/auth/getUserInformation', {id: localStorage.getItem('id')}, config).then((res) => setUserInf(res.data)).catch(() => {
-  //     console.log('error');
-  //   })
-  //   setIsLoaded(true)
-  // }
 
   const deleteReview = (reviewId) => {
     setUserInf({...userInf, reviews: userInf.reviews.filter(el => el.id !== reviewId)})

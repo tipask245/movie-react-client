@@ -12,28 +12,7 @@ import { logOut } from "../utils/LogOut"
 const NavBar = () => {
 
   const {isAuth, setIsAuth, setRole, userInf, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
-  // useEffect(() => {
-  //   if (localStorage.getItem('token') !== null) {
-  //     console.log(localStorage.getItem('token'));
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`
-  //       }
-  //     }
-  //       setIsAuth(true)
-  //       let res = axios.post('http://localhost:5000/auth/checkAuth', {}, config).catch(() => setIsAuth(false))
-  //   }
-  // }, [])
   const router = useNavigate()
-  // const logOut = () => {
-  //   localStorage.removeItem('token')
-  //   setRole('')
-  //   setUserInf([])
-  //   localStorage.removeItem('name')
-  //   localStorage.removeItem('id')
-  //   setIsAuth(false)
-  // }
-
   const name = localStorage.getItem('name')
   
   

@@ -8,7 +8,6 @@ const Login = () => {
   const {setRole, setIsAuth, setUserInf, setIsUserInfLoaded} = useContext(AuthContext)
   const [login, setLogin] = useState({username: '', password: ''})
   const [notFound, setNotFound] = useState({error: '', isFound: true})
-  // const {setIsAuth} = useContext(AuthContext)
   
   const loginReq = (e) => {
     e.preventDefault()

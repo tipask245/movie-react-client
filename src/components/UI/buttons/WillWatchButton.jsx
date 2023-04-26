@@ -1,4 +1,3 @@
-import React from 'react'
 import classes from './WatchButtons.module.scss'
 
 const WillWatchButton = ({isMovieInWillWatched, ...props}) => {

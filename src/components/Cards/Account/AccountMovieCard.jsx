@@ -1,4 +1,3 @@
-import React from 'react'
 import { transliterate as tr } from 'transliteration'
 import { useNavigate } from 'react-router-dom'
 import classes from './AccountMovieCard.module.scss'

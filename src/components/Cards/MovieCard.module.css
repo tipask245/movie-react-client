@@ -2,7 +2,6 @@
   width: 250px;
   min-height: 440px;
   border-radius: 5px;
-  /* background-color: #FFCCB6; */
   background-color: #fff;
   padding: 32px 0;
 }
@@ -21,9 +20,6 @@
   line-height: 26px;
 }
 
-/* .title_type_wrap, .movie_desc, .movie_rating {
-  margin-top: 10px;
-} */
 
 .title_type_wrap {
   width: 170px;
@@ -31,7 +27,6 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  /* line-height: 26px; */
 }
 
 .movie_type {
@@ -72,7 +67,6 @@
 .title_type_wrap, .movie_desc, .movie_rating {
   margin-top: 10px;
   border-radius: inherit;
-  /* background-color: #FDAC89; */
   background-color: #E9E9E9;
   padding: 0 7px;
 }

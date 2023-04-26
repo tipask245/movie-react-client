@@ -1,5 +1,4 @@
 import axios from 'axios'
-import React from 'react'
 import { useState, useEffect } from 'react'
 import classes from './RatingForm.module.scss'
 

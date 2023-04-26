@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { transliterate as tr } from 'transliteration'
 import { IMovie } from '../../types/movies'
 
-// /${tr(movie.type).toLowerCase()}
-
 const MovieCard: React.FC<IMovie> = (movie: IMovie)=> {
   const router = useNavigate()
 

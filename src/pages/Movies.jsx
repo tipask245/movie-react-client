@@ -42,7 +42,6 @@ const Movies = () => {
     }
     if (urlParams.has('page')) {
       let paramValue = urlParams.get('page')
-      // console.log(paramValue);
       setPage(Number(paramValue))
       parameters['page'] = Number(paramValue)
       setIsCreate(false)
@@ -63,12 +62,10 @@ const Movies = () => {
     })
     const totalCount = res.data.totalDocs
     setTotalPages(getTotalPages(totalCount, limit))
-    // console.log(totalCount)
     setMovies(res.data.docs)
     setIsMovieLoading(false)
     console.log(res.data.docs);
   }
-  // console.log(totalPages)
   const createMovie = (newMovie) => {
     const config = {
       headers: {
@@ -101,7 +98,6 @@ const Movies = () => {
   }
 
   const setSort = (sort) => {
-    // setSortSelect(sort)
     if (sort === 'default') {
       navigate('/')
     } else {
