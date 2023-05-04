@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMovie } from '../types/movies'
+import { IMovie } from '../types/MovieCard'
 import MovieCard from './Cards/MovieCard'
 
 interface IMovieListProps {

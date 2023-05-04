@@ -2,7 +2,7 @@ import { transliterate as tr } from 'transliteration'
 import { useNavigate } from 'react-router-dom'
 import classes from './AccountMovieCard.module.scss'
 
-const AccountMovieCard = ({filmTitle, filmId, filmImg, filmRating, listName, deleteMovieInList}) => {
+const AccountMovieCard = ({filmTitle, filmId, filmImg, filmRating, listName, deleteMovieInList, children}) => {
   const router = useNavigate()
   return (
     <div className={classes.account_film} onClick={e => {
@@ -12,7 +12,11 @@ const AccountMovieCard = ({filmTitle, filmId, filmImg, filmRating, listName, del
       <img className={classes.account_film__img} src={filmImg} alt="" />
       <div className={classes.film_info}>
         <h5 className={classes.film_info__title}>{filmTitle}</h5>
-        <h5 className={classes.film_info__rating}>Оценка: <span>{filmRating}</span></h5>
+        <h5 className={classes.film_info__rating}>
+          Оценка: <span>{filmRating}</span>
+          
+          {children}
+        </h5>
       </div>
       {
         deleteMovieInList &&

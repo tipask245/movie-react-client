@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from "axios";
+import { apiUrl } from "../config";
 
 const movieAPI: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: apiUrl,
     timeout: 5000
   })
 
