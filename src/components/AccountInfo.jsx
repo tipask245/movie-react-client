@@ -14,7 +14,7 @@ const AccountInfo = () => {
   return (
     <section className="account__info">
       <div className="account__avatar_wrap">
-        <img className='account__avatar' src={userInf.avatar ? `${apiUrl}${userInf.avatar}` : nf} alt="" />
+        <img className='account__avatar' src={userInf.avatar ? `${apiUrl}/${userInf.avatar}` : nf} alt="" />
         <button className="account__change_avatar" onClick={() => setModal(true)}>Изменить аватар</button>
         <Modal visible={modal} setVisible={setModal}>
           <UploadImgForm setVisible={setModal}/>

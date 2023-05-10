@@ -50,7 +50,7 @@ const AccountPage = () => {
 
   const switchCard = (currentList, el) => {
     switch (currentList) {
-      case 'review':
+      case 'reviews':
         return (
           <AccountReview
             filmImg={el.img}

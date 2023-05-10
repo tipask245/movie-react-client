@@ -26,7 +26,7 @@ const NavBar = () => {
           {
             isAuth
             ? (<div className='user'>
-                <img src={userInf.avatar ? `${apiUrl}${userInf.avatar}` : nf} alt="" className="user__avatar" />
+                <img src={userInf.avatar ? `${apiUrl}/${userInf.avatar}` : nf} alt="" className="user__avatar" />
                 <h3 className='user__name' onClick={() => router(`/account/${tr(name).toLowerCase()}`)}>{name}</h3>
                 <button className='user__logout' onClick={() => logOut(setRole, setUserInf, setIsUserInfLoaded, setIsAuth)}>Выйти</button>
               </div>)
