@@ -56,7 +56,7 @@ const SearchInput = () => {
             isSearching(results)
             ?
               results.map(movie => (
-                <div className={classes.result_movie} key={movie._id} onClick={() => router(`/${tr(movie.title).toLowerCase()}_${movie.id}`)}>
+                <div className={classes.result_movie} key={movie.id} onClick={() => router(`/movie/${tr(movie.title).toLowerCase()}_${movie.id}`)}>
                   <img src={movie.img} alt={movie.title} />
                   <div className={classes.info_wrap}>
                     <h5 className={classes.result_movie__title}>{movie.title}</h5>
